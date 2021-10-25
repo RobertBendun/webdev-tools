@@ -36,7 +36,8 @@ lowdown "$Source/devlog.md" -o "$Intermediate/devlog.0.html"
 awk -f anchor.awk "$Intermediate/devlog.0.html" > "$Intermediate/devlog.html"
 
 # Build changelog
-lowdown "$Source/changelog.md" -o "$Intermediate/changelog.html"
+lowdown "$Source/changelog.md" -o "$Intermediate/changelog.0.html"
+awk -f anchor.awk "$Intermediate/changelog.0.html" > "$Intermediate/changelog.html"
 
 # Build regular files
 
