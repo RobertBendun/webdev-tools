@@ -35,6 +35,10 @@ find "$Source" -type d | sed "s/^$Source/$Target/" | xargs -I{} mkdir -p "{}"
 lowdown "$Source/devlog.md" -o "$Intermediate/devlog.0.html"
 awk -f anchor.awk "$Intermediate/devlog.0.html" > "$Intermediate/devlog.html"
 
+# Build knowlog
+lowdown "$Source/knowlog.md" -o "$Intermediate/knowlog.0.html"
+awk -f anchor.awk "$Intermediate/knowlog.0.html" > "$Intermediate/knowlog.html"
+
 # Build changelog
 lowdown "$Source/changelog.md" -o "$Intermediate/changelog.0.html"
 awk -f anchor.awk "$Intermediate/changelog.0.html" > "$Intermediate/changelog.html"
@@ -52,6 +56,7 @@ for src_file in $(find "$Source" -type f -not -name "__*"); do
 			swapf __HEADER__ "$Source/__header.html" "$dst_file"
 			swapf __FOOTER__ "$Source/__footer.html" "$dst_file"
 			swapf __DEVLOG__ "$Intermediate/devlog.html" "$dst_file"
+			swapf __KNOWLOG__ "$Intermediate/knowlog.html" "$dst_file"
 			swapf __CHANGELOG__ "$Intermediate/changelog.html" "$dst_file"
 			;;
 	esac
