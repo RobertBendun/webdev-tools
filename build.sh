@@ -26,22 +26,19 @@ EOS
 	) "$3"
 }
 
+mklog() {
+	lowdown "$Source/$1.md" -o "$Intermediate/$1.0.html"
+	awk -f anchor.awk "$Intermediate/$1.0.html" > "$Intermediate/$1.html"
+}
+
 mkdir -p "$Target"
 mkdir -p "$Intermediate"
 
 find "$Source" -type d | sed "s/^$Source/$Target/" | xargs -I{} mkdir -p "{}"
 
-# Build devlog
-lowdown "$Source/devlog.md" -o "$Intermediate/devlog.0.html"
-awk -f anchor.awk "$Intermediate/devlog.0.html" > "$Intermediate/devlog.html"
-
-# Build knowlog
-lowdown "$Source/knowlog.md" -o "$Intermediate/knowlog.0.html"
-awk -f anchor.awk "$Intermediate/knowlog.0.html" > "$Intermediate/knowlog.html"
-
-# Build changelog
-lowdown "$Source/changelog.md" -o "$Intermediate/changelog.0.html"
-awk -f anchor.awk "$Intermediate/changelog.0.html" > "$Intermediate/changelog.html"
+mklog "devlog"
+mklog "knowlog"
+mklog "changelog"
 
 # Build regular files
 
